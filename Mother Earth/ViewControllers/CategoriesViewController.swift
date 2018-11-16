@@ -7,24 +7,44 @@
 //
 
 import UIKit
+import RxSwift
 
 class CategoriesViewController: UIViewController {
 
+    @IBOutlet weak var categoriesTableView: UITableView!
+    
+    let categories = Variable<[Category]>([])
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        categories
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                // Traditional way of doing things.. We will use Schedulers later
+                DispatchQueue.main.async {
+                    self?.categoriesTableView?.reloadData()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        categories
+            .asObservable()
+            .bind(to: categoriesTableView.rx.items(cellIdentifier: "categoryCell")) { index, model, cell in
+                cell.textLabel?.text = model.name
+                cell.detailTextLabel?.text = model.description
+            }
+            .disposed(by: disposeBag)
+        
+        startDownload()
     }
 
-}
-
-extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+    func startDownload() {
+        let localCategories = EONETRequestRouter.categories
+        localCategories
+            .bind(to: categories)
+            .disposed(by : disposeBag)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cateogryCell", for: indexPath)
-        return cell
-    }
 }

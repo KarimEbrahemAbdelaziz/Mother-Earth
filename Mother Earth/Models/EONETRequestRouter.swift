@@ -36,10 +36,10 @@ class EONETRequestRouter {
     // Generic Request
     static func request(endPoint: String, query: [String: Any] = [:]) -> Observable<[String: Any]> {
         do {
-            guard let url = URL(string: API)?.appendingPathComponent(endPoint), var components = URLComponents(url: url, resolvingAgainstBaseURL: true) else{
+            guard let url = URL(string: API)?.appendingPathComponent(endPoint), var components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
                 throw EONETError.invalidURL(endPoint)
             }
-            components.queryItems = try query.flatMap{ (key, value) in
+            components.queryItems = try query.compactMap{ (key, value) in
                 guard let val = value as? CustomStringConvertible else {
                     throw EONETError.invalidParameter(key, value)
                 }
@@ -51,14 +51,17 @@ class EONETRequestRouter {
             
             let request = URLRequest(url: finalURL)
             
-            return URLSession.shared.rx.response(request: request)
-                .map{ _, data -> [String: Any] in
+            return URLSession
+                .shared
+                .rx
+                .response(request: request)
+                .map { _, data -> [String: Any] in
                     guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []), let result = jsonObject as? [String: Any] else {
                         throw EONETError.invalidJSON(finalURL.absoluteString)
                     }
                     return result
             }
-        }catch {
+        } catch {
             return Observable.empty()
         }
     }
@@ -69,14 +72,13 @@ class EONETRequestRouter {
             .map { data in
                 let categories = data["categories"] as? [[String: Any]] ?? []
                 return categories
-                    .flatMap(Category.init)
+                    .compactMap(Category.init)
                     .sorted { $0.name < $1.name }
             }
-            .shareReplay(1)
+            .share(replay: 1)
     }()
     
-    fileprivate static func events(forLast days: Int, closed: Bool) ->
-        Observable<[Event]> {
+    fileprivate static func events(forLast days: Int, closed: Bool) -> Observable<[Event]> {
             return request(endPoint: eventsEndPoint, query: [
                 "days": NSNumber(value: days),
                 "status": (closed ? "closed" : "open")
@@ -85,7 +87,7 @@ class EONETRequestRouter {
                     guard let raw = json["events"] as? [[String: Any]] else {
                         throw EONETError.invalidJSON(eventsEndPoint)
                     }
-                    return raw.flatMap(Event.init)
+                    return raw.compactMap(Event.init)
             }
     }
     
