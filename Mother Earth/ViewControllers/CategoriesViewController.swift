@@ -22,7 +22,6 @@ class CategoriesViewController: UIViewController {
         categories
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                // Traditional way of doing things.. We will use Schedulers later
                 DispatchQueue.main.async {
                     self?.categoriesTableView?.reloadData()
                 }
@@ -32,8 +31,9 @@ class CategoriesViewController: UIViewController {
         categories
             .asObservable()
             .bind(to: categoriesTableView.rx.items(cellIdentifier: "categoryCell")) { index, model, cell in
-                cell.textLabel?.text = model.name
-                cell.detailTextLabel?.text = model.description
+                cell.textLabel?.text = "\(model.name) (\(model.events.count))"
+                cell.accessoryType = (model.events.count > 0) ? .disclosureIndicator
+                    : .none
             }
             .disposed(by: disposeBag)
         
@@ -42,9 +42,22 @@ class CategoriesViewController: UIViewController {
 
     func startDownload() {
         let localCategories = EONETRequestRouter.categories
+        let downloadedEvents = EONETRequestRouter.events(forLast: 360)
+        let updatedCategories =
+            Observable
+                .combineLatest(localCategories, downloadedEvents) { (categories, events) -> [Category] in
+                    return categories.map { category in
+                        var cat = category
+                        cat.events = events.filter {
+                            $0.categories.contains(category.id)
+                        }
+                        return cat
+                    }
+        }
         localCategories
+            .concat(updatedCategories)
             .bind(to: categories)
-            .disposed(by : disposeBag)
+            .disposed(by: disposeBag)
     }
     
 }
