@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B0776713E9A65C115F2A63D /* Pods_Mother_Earth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994657CF44161C4E1801C505 /* Pods_Mother_Earth.framework */; };
 		BC4B0E63219E4186001B396F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B0E62219E4186001B396F /* AppDelegate.swift */; };
 		BC4B0E65219E4186001B396F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B0E64219E4186001B396F /* ViewController.swift */; };
 		BC4B0E68219E4186001B396F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC4B0E66219E4186001B396F /* Main.storyboard */; };
@@ -15,6 +16,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2893B428D861C74BE5AF7DBF /* Pods-Mother Earth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mother Earth.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mother Earth/Pods-Mother Earth.release.xcconfig"; sourceTree = "<group>"; };
+		8C42E9E9E0C829251579FA9A /* Pods-Mother Earth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mother Earth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mother Earth/Pods-Mother Earth.debug.xcconfig"; sourceTree = "<group>"; };
+		994657CF44161C4E1801C505 /* Pods_Mother_Earth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mother_Earth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC4B0E5F219E4186001B396F /* Mother Earth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mother Earth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC4B0E62219E4186001B396F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC4B0E64219E4186001B396F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -29,17 +33,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B0776713E9A65C115F2A63D /* Pods_Mother_Earth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9CD76E2F3E7B3966A7CF18F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				994657CF44161C4E1801C505 /* Pods_Mother_Earth.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BB996EE652726E5CB931C804 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8C42E9E9E0C829251579FA9A /* Pods-Mother Earth.debug.xcconfig */,
+				2893B428D861C74BE5AF7DBF /* Pods-Mother Earth.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BC4B0E56219E4185001B396F = {
 			isa = PBXGroup;
 			children = (
 				BC4B0E61219E4186001B396F /* Mother Earth */,
 				BC4B0E60219E4186001B396F /* Products */,
+				BB996EE652726E5CB931C804 /* Pods */,
+				9CD76E2F3E7B3966A7CF18F7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,9 +95,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC4B0E71219E418B001B396F /* Build configuration list for PBXNativeTarget "Mother Earth" */;
 			buildPhases = (
+				076D3856A1B9F76094FABD52 /* [CP] Check Pods Manifest.lock */,
 				BC4B0E5B219E4185001B396F /* Sources */,
 				BC4B0E5C219E4185001B396F /* Frameworks */,
 				BC4B0E5D219E4185001B396F /* Resources */,
+				734F26B913E60FF29804A6D0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -129,6 +155,55 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		076D3856A1B9F76094FABD52 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mother Earth-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		734F26B913E60FF29804A6D0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Mother Earth/Pods-Mother Earth-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mother Earth/Pods-Mother Earth-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BC4B0E5B219E4185001B396F /* Sources */ = {
@@ -280,6 +355,7 @@
 		};
 		BC4B0E72219E418B001B396F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C42E9E9E0C829251579FA9A /* Pods-Mother Earth.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -297,6 +373,7 @@
 		};
 		BC4B0E73219E418B001B396F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2893B428D861C74BE5AF7DBF /* Pods-Mother Earth.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

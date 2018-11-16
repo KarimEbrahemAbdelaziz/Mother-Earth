@@ -1,0 +1,6 @@
+framework module Pods_Mother_Earth {
+  umbrella header "Pods-Mother Earth-umbrella.h"
+
+  export *
+  module * { export * }
+}
